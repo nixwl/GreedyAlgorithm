@@ -1,0 +1,34 @@
+# Project: hw2
+# Makefile created by Red Panda C++ 2.7
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+RES      = hw2_private.res
+OBJ      = main.o $(RES)
+LINKOBJ  = main.o $(RES)
+CLEANOBJ  =  main.o hw2_private.res hw2.exe
+LIBS     =  -s -mwindows -static
+INCS     =  
+CXXINCS  =  
+BIN      = hw2.exe
+CXXFLAGS = $(CXXINCS)  -O2 -pipe
+CFLAGS   = $(INCS)  -O2 -pipe
+RM       = del /q /f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) > NUL 2>&1
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)  -finput-charset=UTF-8 -fexec-charset=gbk
+
+hw2_private.res: hw2_private.rc 
+	$(WINDRES) -i hw2_private.rc --input-format=rc -o hw2_private.res -O coff 
+
